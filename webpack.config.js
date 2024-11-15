@@ -1,3 +1,7 @@
+const {
+  sentryWebpackPlugin
+} = require("@sentry/webpack-plugin");
+
 const path = require('path');
 
 const HtmlWebPackPlugin = require('html-webpack-plugin');
@@ -5,14 +9,17 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'development',
+
   entry: {
     main: path.resolve(__dirname, './src/index.js'),
   },
+
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].bundle.js',
     clean: true,
   },
+
   module: {
     rules: [
       // JavaScript
@@ -51,12 +58,16 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      title: 'react-webpack-app',
-      template: './src/template.html',
-      filename: './index.html',
-    }),
-    new CleanWebpackPlugin(),
-  ],
+
+  plugins: [new HtmlWebPackPlugin({
+    title: 'react-webpack-app',
+    template: './src/template.html',
+    filename: './index.html',
+  }), new CleanWebpackPlugin(), sentryWebpackPlugin({
+    authToken: process.env.SENTRY_AUTH_TOKEN,
+    org: "jesse-box",
+    project: "javascript-react"
+  })],
+
+  devtool: "source-map"
 };

@@ -10,7 +10,13 @@ function App() {
   return (
     <div>
       <h1>This is my React app!</h1>
-      <button>Send Error</button>
+      <button
+        onClick={() => {
+          throw new Error('This is your first error!');
+        }}
+      >
+        Send Error
+      </button>
     </div>
   );
 }
