@@ -1,7 +1,3 @@
-const {
-  sentryWebpackPlugin
-} = require("@sentry/webpack-plugin");
-
 const path = require('path');
 
 const HtmlWebPackPlugin = require('html-webpack-plugin');
@@ -59,15 +55,12 @@ module.exports = {
     ],
   },
 
-  plugins: [new HtmlWebPackPlugin({
-    title: 'react-webpack-app',
-    template: './src/template.html',
-    filename: './index.html',
-  }), new CleanWebpackPlugin(), sentryWebpackPlugin({
-    authToken: process.env.SENTRY_AUTH_TOKEN,
-    org: "jesse-box",
-    project: "javascript-react"
-  })],
-
-  devtool: "source-map"
+  plugins: [
+    new HtmlWebPackPlugin({
+      title: 'react-webpack-app',
+      template: './src/template.html',
+      filename: './index.html',
+    }),
+    new CleanWebpackPlugin(),
+  ],
 };
